@@ -1,27 +1,21 @@
 import { useEffect, useState } from "react";
 import Product from "./Product";
-import axios from "axios";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { productAPI } from "../../services/ProductService";
 import "./ProductList.css";
 
 export default function ProductList() {
   const [productList, setProductList] = useState([]);
   const [recordForEdit, setRecordForEdit] = useState(null);
 
+  const axiosPrivate = useAxiosPrivate();
+
   useEffect(() => {
-    refreshEmployeeList();
+    refreshProductList();
   }, []);
 
-  const productAPI = (url = "http://localhost:5288/api/products") => {
-    return {
-      fetchAll: () => axios.get(url),
-      create: (newRecord) => axios.post(url, newRecord),
-      update: (id, updatedRecord) => axios.put(`${url}/${id}`, updatedRecord),
-      delete: (id) => axios.delete(`${url}/${id}`),
-    };
-  };
-
-  function refreshEmployeeList() {
-    productAPI()
+  function refreshProductList() {
+    productAPI(axiosPrivate)
       .fetchAll()
       .then((response) => {
         console.log(response.data);
@@ -33,25 +27,25 @@ export default function ProductList() {
   }
 
   const addOrEdit = (formData, onSuccess) => {
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
-    }
+    // for (var pair of formData.entries()) {
+    //   console.log(pair[0] + ", " + pair[1]);
+    // }
     if (formData.get("Id") === "") {
-      productAPI()
+      productAPI(axiosPrivate)
         .create(formData)
         .then((response) => {
           onSuccess(response.data);
-          refreshEmployeeList();
+          refreshProductList();
         })
         .catch((error) => {
           console.log(error);
         });
     } else {
-      productAPI()
+      productAPI(axiosPrivate)
         .update(formData.get("Id"), formData)
         .then((response) => {
           onSuccess(response.data);
-          refreshEmployeeList();
+          refreshProductList();
         })
         .catch((error) => {
           console.log(error);
@@ -67,10 +61,10 @@ export default function ProductList() {
   const onDelete = (e, id) => {
     e.stopPropagation();
     if (window.confirm("Are you sure you want to delete this product"))
-      productAPI()
+      productAPI(axiosPrivate)
         .delete(id)
         .then((response) => {
-          refreshEmployeeList();
+          refreshProductList();
         })
         .catch((error) => {
           console.log(error);
@@ -112,32 +106,34 @@ export default function ProductList() {
             </div>
           </div>
         </div>
-        <div className="col-md-4">
-          <Product addOrEdit={addOrEdit} recordForEdit={recordForEdit} />
-        </div>
-        <div className="col-md-8">
-          <div>
-            <table>
-              <tbody>
-                {[...Array(Math.ceil(productList.length / 3))].map(
-                  (elem, index) => (
-                    <tr key={index}>
-                      <td>{imageCard(productList[3 * index])}</td>
-                      <td>
-                        {productList[3 * index + 1]
-                          ? imageCard(productList[3 * index + 1])
-                          : null}
-                      </td>
-                      <td>
-                        {productList[3 * index + 2]
-                          ? imageCard(productList[3 * index + 2])
-                          : null}
-                      </td>
-                    </tr>
-                  )
-                )}
-              </tbody>
-            </table>
+        <div className="mypage">
+          <div className="col-md-4">
+            <Product addOrEdit={addOrEdit} recordForEdit={recordForEdit} />
+          </div>
+          <div className="col-md-8">
+            <div>
+              <table>
+                <tbody>
+                  {[...Array(Math.ceil(productList.length / 3))].map(
+                    (elem, index) => (
+                      <tr key={index}>
+                        <td>{imageCard(productList[3 * index])}</td>
+                        <td>
+                          {productList[3 * index + 1]
+                            ? imageCard(productList[3 * index + 1])
+                            : null}
+                        </td>
+                        <td>
+                          {productList[3 * index + 2]
+                            ? imageCard(productList[3 * index + 2])
+                            : null}
+                        </td>
+                      </tr>
+                    )
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

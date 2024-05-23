@@ -6,6 +6,7 @@ import useAuth from "./useAuth";
 
 const useAxiosPrivate = () => {
   const refresh = useRefreshToken();
+
   const { cookies } = useAuth();
 
   useEffect(() => {

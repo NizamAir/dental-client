@@ -1,7 +1,6 @@
-import "./NewRegister.css";
+import "./Register.css";
 import { useRef, useState, useEffect } from "react";
 import axios from "../../api/axios";
-import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import {
   faCheck,
@@ -18,7 +17,7 @@ const PHONE_REGEX = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/;
 
 const REGISTER_URL = "/authentication";
 
-const NewRegister = () => {
+const Register = () => {
   const userRef = useRef();
   const errRef = useRef();
 
@@ -119,7 +118,7 @@ const NewRegister = () => {
           password: password,
           email: email,
           phonenumber: phoneNumber,
-          roles: ["Assistant"],
+          roles: ["User"],
         }),
         {
           headers: { "Content-Type": "application/json" },
@@ -152,17 +151,17 @@ const NewRegister = () => {
   };
 
   return (
-    <div className="row d-flex align-items-center justify-content-center">
-      <div>
+    <>
+      <>
         {success ? (
-          <section className="mx-auto text-center d-flex flex-column justify-content-start p-3 text-white fs-5 rounded-3">
+          <section>
             <h2>Success!</h2>
             <p>
               <Link to="/login">Sign In</Link>
             </p>
           </section>
         ) : (
-          <section className="mx-auto text-start d-flex flex-column justify-content-start w-100 p-3 text-white fs-5 rounded-3">
+          <section>
             <p
               ref={errRef}
               className={errMsg ? "errmsg" : "offscreen"}
@@ -458,9 +457,9 @@ const NewRegister = () => {
             </div>
           </section>
         )}
-      </div>
-    </div>
+      </>
+    </>
   );
 };
 
-export default NewRegister;
+export default Register;

@@ -36,14 +36,13 @@ section {
 /* padding-bottom: 1rem; 
 } */
 
-a,
+/* a,
 a:visited {
   color: #fff;
-}
+} */
 
 input[type="text"],
 input[type="password"],
-button,
 textarea {
   font-family: "Nunito", sans-serif !important;
   font-size: 22px !important;

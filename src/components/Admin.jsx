@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import Users from "./Users";
+import Users from "./Users/Users";
 
 export const Admin = () => {
   return (

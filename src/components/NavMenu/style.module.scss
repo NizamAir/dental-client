@@ -1,0 +1,47 @@
+.nav {
+  background-color: #002d70;
+  padding: 25px 0;
+  font-size: 16px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &__items {
+    display: flex;
+    gap: 40px;
+  }
+  &__auth {
+    display: flex;
+    gap: 30px;
+  }
+}
+
+li {
+  display: inline-block;
+  position: relative;
+  color: #fff;
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: #fff;
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+  }
+  &:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+}
+
+.active {
+  font-weight: 700;
+  color: #17a92f;
+}

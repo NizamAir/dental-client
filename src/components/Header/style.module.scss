@@ -1,0 +1,46 @@
+.info {
+  padding: 25px 0 25px;
+  display: flex;
+  justify-content: space-between;
+
+  font-size: 14px;
+  line-height: 1.35;
+  &__desc {
+    max-width: 385px;
+    display: flex;
+    align-items: center;
+    // justify-content: space-between;
+    gap: 20px;
+
+    &_logo {
+      width: 150px;
+      height: 34px;
+    }
+
+    &_text {
+      width: 215px;
+      height: 34px;
+    }
+  }
+
+  &__contacts {
+    display: flex;
+    gap: 35px;
+
+    &_address {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    &_phone {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      p > a {
+        color: #000;
+        font-size: 18px;
+        font-weight: 700;
+      }
+    }
+  }
+}

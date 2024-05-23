@@ -6,10 +6,6 @@ const RequireAuth = ({ allowedRoles }) => {
 
   const { cookies } = useAuth();
 
-  // console.log("allowedRoles: " + allowedRoles);
-  // console.log("authRoles: " + auth.roles);
-  // console.log("check", allowedRoles.includes(auth?.roles));
-
   return allowedRoles.includes(cookies.get("roles")) ? (
     <Outlet />
   ) : cookies.get("accessToken") ? (
