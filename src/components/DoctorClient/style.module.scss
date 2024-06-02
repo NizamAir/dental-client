@@ -1,0 +1,42 @@
+.title {
+  font-size: 50px;
+  color: #002d70;
+  text-align: center;
+  margin-bottom: 40px;
+  font-weight: 700;
+  @media (max-width: 576px) {
+    font-size: 40px;
+  }
+}
+
+.section {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 20px;
+
+  &__title {
+    margin-bottom: 20px;
+  }
+
+  &__cards {
+    max-width: 700px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+
+    &__card {
+      width: 300px;
+      padding: 10px;
+      border: 1px solid #000;
+      border-radius: 10px;
+
+      &__title {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}

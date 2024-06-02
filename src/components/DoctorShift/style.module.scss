@@ -1,0 +1,49 @@
+.section {
+  color: #000;
+}
+
+.title {
+  font-size: 50px;
+  color: #002d70;
+  text-align: center;
+  margin-bottom: 40px;
+  font-weight: 700;
+  @media (max-width: 576px) {
+    font-size: 40px;
+  }
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 20px;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  &__title {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  &__selected {
+    color: #000;
+  }
+
+  &__btn {
+    padding: 0.25rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #17a92f;
+    color: #fff;
+    font-size: 20px;
+  }
+}
+
+.shifts {
+  display: flex;
+  flex-direction: column;
+}

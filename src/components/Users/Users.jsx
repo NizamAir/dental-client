@@ -1,11 +1,14 @@
-import "./styles.css";
 import { useState, useEffect } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
+import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 
 import { useNavigate, useLocation } from "react-router-dom";
 
 import Edit from "./Edit";
 
+import style from "./style.module.scss";
+import "./styles.css";
 const USER_URL = "/userslist";
 
 export const Users = () => {
@@ -57,20 +60,22 @@ export const Users = () => {
 
   return (
     <div>
-      <h2>Список пользователей</h2>
-      <div className="users__table">
+      <h2 className={style.title}>Список пользователей</h2>
+      <div className={style.users__table}>
         {users?.length ? (
-          <table>
-            <thead>
-              <tr>
-                <th>Имя</th>
-                <th>Фамилия</th>
-                <th>Роль</th>
-                <th>Изменить</th>
-                <th>Удалить</th>
-              </tr>
-            </thead>
-            <tbody>
+          <Table className={style.table}>
+            <Thead>
+              <Tr>
+                <Th>Имя</Th>
+                <Th>Фамилия</Th>
+                <Th>Роль</Th>
+                <Th>Изменить роль</Th>
+                <Th>
+                  Удалить <br /> пользователя
+                </Th>
+              </Tr>
+            </Thead>
+            <Tbody>
               {users.map((userObj, index) => {
                 return updateState === userObj.user.id ? (
                   <Edit
@@ -80,35 +85,35 @@ export const Users = () => {
                     userObj={userObj}
                   />
                 ) : (
-                  <tr key={index}>
-                    <td>{userObj.user.firstName}</td>
-                    <td>{userObj.user.lastName}</td>
-                    <td>
+                  <Tr key={index}>
+                    <Td>{userObj.user.firstName}</Td>
+                    <Td>{userObj.user.lastName}</Td>
+                    <Td>
                       {userObj.roles.map((role, index) => (
                         <span key={index}>{role}</span>
                       ))}
-                    </td>
-                    <td>
+                    </Td>
+                    <Td>
                       <button
-                        className="update__btn"
+                        className={style.update__btn}
                         onClick={() => handleEdit(userObj.user.id)}
                       >
                         Изменить
                       </button>
-                    </td>
-                    <td>
+                    </Td>
+                    <Td>
                       <button
-                        className="delete__btn"
+                        className={style.delete__btn}
                         onClick={(e) => onDeleteUser(e, userObj.user.id)}
                       >
                         Удалить
                       </button>
-                    </td>
-                  </tr>
+                    </Td>
+                  </Tr>
                 );
               })}
-            </tbody>
-          </table>
+            </Tbody>
+          </Table>
         ) : (
           <p>Пользователей нет</p>
         )}

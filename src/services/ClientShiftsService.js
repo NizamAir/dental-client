@@ -1,5 +1,6 @@
 export const clientShiftsAPI = (axiosPrivate, url = "/clientshifts") => {
   return {
+    fetchShifts: () => axiosPrivate.get(url),
     fetchDoctors: () => axiosPrivate.get(url + "/doctors"),
     fetchProducts: () => axiosPrivate.get(url + "/products"),
     fetchDoctorDates: (doctorId) =>
@@ -7,6 +8,9 @@ export const clientShiftsAPI = (axiosPrivate, url = "/clientshifts") => {
     fetchTimesForDay: (newRecord) =>
       axiosPrivate.post(url + "/times", newRecord),
     create: (newRecord) => axiosPrivate.post(url, newRecord),
+
+    delete: (id) => axiosPrivate.delete(`${url}/${id}`),
+
     // fetchAssistantDates: () => axiosPrivate.get(url + "/dates"),
     // create: (newRecord) => axiosPrivate.post(url, newRecord),
     // fetchAll: () => axiosPrivate.get(url),

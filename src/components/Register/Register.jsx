@@ -1,4 +1,3 @@
-import "./Register.css";
 import { useRef, useState, useEffect } from "react";
 import axios from "../../api/axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,6 +7,8 @@ import {
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import style from "./style.module.scss";
 
 const FIRST_LAST_NAME_REGEX = /^[А-ЯЁ][а-яё]*([-][А-ЯЁ][а-яё]*)?$/;
 const USERNAME_REGEX = /^[A-z][A-z0-9]{3,23}$/;
@@ -140,11 +141,11 @@ const Register = () => {
       setPhoneNumber("");
     } catch (err) {
       if (!err?.response) {
-        setErrMsg("No Server Response");
+        setErrMsg("Успешно зарегистрировались");
       } else if (err.response?.status === 409) {
-        setErrMsg("Username Taken");
+        setErrMsg("Имя пользователя занято");
       } else {
-        setErrMsg("Registration Failed");
+        setErrMsg("Ошибка регистрации");
       }
       errRef.current.focus();
     }
@@ -152,36 +153,35 @@ const Register = () => {
 
   return (
     <>
-      <>
-        {success ? (
-          <section>
-            <h2>Success!</h2>
-            <p>
-              <Link to="/login">Sign In</Link>
-            </p>
-          </section>
-        ) : (
-          <section>
-            <p
-              ref={errRef}
-              className={errMsg ? "errmsg" : "offscreen"}
-              aria-live="assertive"
-            >
-              {errMsg}
-            </p>
-            <h2>Регистрация</h2>
+      {success ? (
+        <section className={style.section}>
+          <h2>Успешно зарегистрировались!</h2>
+          <p>
+            <Link to="/login">Войти</Link>
+          </p>
+        </section>
+      ) : (
+        <section className={style.section}>
+          <p
+            ref={errRef}
+            className={errMsg ? style.errmsg : style.form__item__offscreen}
+            aria-live="assertive"
+          >
+            {errMsg}
+          </p>
+          <h1 className={style.title}>Регистрация</h1>
 
-            <form
-              onSubmit={handleSubmit}
-              className="d-flex flex-column justify-content-evenly flex-grow-1 pb-3"
-            >
+          <form onSubmit={handleSubmit} className={style.form}>
+            <div className={style.form__item}>
               <label htmlFor="firstName">
                 Имя:
-                <span className={validFirstName ? "valid" : "hide"}>
+                <span className={validFirstName ? style.valid : style.hide}>
                   <FontAwesomeIcon icon={faCheck} />
                 </span>{" "}
                 <span
-                  className={validFirstName || !firstName ? "hide" : "invalid"}
+                  className={
+                    validFirstName || !firstName ? style.hide : style.invalid
+                  }
                 >
                   <FontAwesomeIcon icon={faTimes} />
                 </span>
@@ -203,21 +203,25 @@ const Register = () => {
                 id="uidnote"
                 className={
                   firstNameFocus && firstName && !validFirstName
-                    ? "instructions"
-                    : "offscreen"
+                    ? style.form__item__instructions
+                    : style.form__item__offscreen
                 }
               >
                 <FontAwesomeIcon icon={faInfoCircle} /> Должно начинаться с
                 заглавной буквы <br /> Можно использовать только буквы{" "}
               </p>
+            </div>
 
+            <div className={style.form__item}>
               <label htmlFor="lastName">
                 Фамилия:
-                <span className={validLastName ? "valid" : "hide"}>
+                <span className={validLastName ? style.valid : style.hide}>
                   <FontAwesomeIcon icon={faCheck} />
                 </span>{" "}
                 <span
-                  className={validLastName || !lastName ? "hide" : "invalid"}
+                  className={
+                    validLastName || !lastName ? style.hide : style.invalid
+                  }
                 >
                   <FontAwesomeIcon icon={faTimes} />
                 </span>
@@ -239,21 +243,24 @@ const Register = () => {
                 id="uidnote"
                 className={
                   lastNameFocus && lastName && !validLastName
-                    ? "instructions"
-                    : "offscreen"
+                    ? style.form__item__instructions
+                    : style.form__item__offscreen
                 }
               >
                 <FontAwesomeIcon icon={faInfoCircle} /> Должна начинаться с
                 заглавной буквы <br /> Можно использовать только буквы{" "}
               </p>
-
+            </div>
+            <div className={style.form__item}>
               <label htmlFor="userName">
-                UserName:
-                <span className={validUserName ? "valid" : "hide"}>
+                Имя пользователя:
+                <span className={validUserName ? style.valid : style.hide}>
                   <FontAwesomeIcon icon={faCheck} />
                 </span>{" "}
                 <span
-                  className={validUserName || !userName ? "hide" : "invalid"}
+                  className={
+                    validUserName || !userName ? style.hide : style.invalid
+                  }
                 >
                   <FontAwesomeIcon icon={faTimes} />
                 </span>
@@ -275,24 +282,25 @@ const Register = () => {
                 id="uidnote"
                 className={
                   userNameFocus && userName && !validUserName
-                    ? "instructions"
-                    : "offscreen"
+                    ? style.form__item__instructions
+                    : style.form__item__offscreen
                 }
               >
                 <FontAwesomeIcon icon={faInfoCircle} /> С 4 до 24 букв <br />
                 Должен начинаться с буквы <br />
                 Можно использовать только буквы и цифры
               </p>
-
+            </div>
+            <div className={style.form__item}>
               <label htmlFor="email">
                 Email:
                 <FontAwesomeIcon
                   icon={faCheck}
-                  className={validEmail ? "valid" : "hide"}
+                  className={validEmail ? style.valid : style.hide}
                 />
                 <FontAwesomeIcon
                   icon={faTimes}
-                  className={validEmail || !email ? "hide" : "invalid"}
+                  className={validEmail || !email ? style.hide : style.invalid}
                 />
               </label>
               <input
@@ -312,24 +320,27 @@ const Register = () => {
                 id="uidnote"
                 className={
                   emailFocus && email && !validEmail
-                    ? "instructions"
-                    : "offscreen"
+                    ? style.form__item__instructions
+                    : style.form__item__offscreen
                 }
               >
                 <FontAwesomeIcon icon={faInfoCircle} /> Введите почту в формате:
                 example@example.com
               </p>
-
+            </div>
+            <div className={style.form__item}>
               <label htmlFor="phoneNumber">
                 Телефон:
                 <FontAwesomeIcon
                   icon={faCheck}
-                  className={validPhoneNumber ? "valid" : "hide"}
+                  className={validPhoneNumber ? style.valid : style.hide}
                 />
                 <FontAwesomeIcon
                   icon={faTimes}
                   className={
-                    validPhoneNumber || !phoneNumber ? "hide" : "invalid"
+                    validPhoneNumber || !phoneNumber
+                      ? style.hide
+                      : style.invalid
                   }
                 />
               </label>
@@ -350,23 +361,26 @@ const Register = () => {
                 id="uidnote"
                 className={
                   phoneNumberFocus && phoneNumber && !validPhoneNumber
-                    ? "instructions"
-                    : "offscreen"
+                    ? style.form__item__instructions
+                    : style.form__item__offscreen
                 }
               >
                 <FontAwesomeIcon icon={faInfoCircle} /> Введите номер в формате:
                 8(912)345-67-89
               </p>
-
+            </div>
+            <div className={style.form__item}>
               <label htmlFor="password">
                 Пароль:
                 <FontAwesomeIcon
                   icon={faCheck}
-                  className={validPassword ? "valid" : "hide"}
+                  className={validPassword ? style.valid : style.hide}
                 />
                 <FontAwesomeIcon
                   icon={faTimes}
-                  className={validPassword || !password ? "hide" : "invalid"}
+                  className={
+                    validPassword || !password ? style.hide : style.invalid
+                  }
                 />
               </label>
               <input
@@ -384,7 +398,9 @@ const Register = () => {
               <p
                 id="pwdnote"
                 className={
-                  passwordFocus && !validPassword ? "instructions" : "offscreen"
+                  passwordFocus && !validPassword
+                    ? style.form__item__instructions
+                    : style.form__item__offscreen
                 }
               >
                 <FontAwesomeIcon icon={faInfoCircle} /> с 8 до 24 букв.
@@ -393,26 +409,31 @@ const Register = () => {
                 <br />
                 Можно использовать только латинские буквы и цифры
               </p>
-
+            </div>
+            <div className={style.form__item}>
               <label htmlFor="confirm_pwd">
                 Повторите пароль :
                 <FontAwesomeIcon
                   icon={faCheck}
                   className={
-                    validMatchPassword && matchPassword ? "valid" : "hide"
+                    validMatchPassword && matchPassword
+                      ? style.valid
+                      : style.hide
                   }
                 />
                 <FontAwesomeIcon
                   icon={faTimes}
                   className={
-                    validMatchPassword || !matchPassword ? "hide" : "invalid"
+                    validMatchPassword || !matchPassword
+                      ? style.hide
+                      : style.invalid
                   }
                 />
               </label>
               <input
                 type="password"
                 id="confirm_pwd"
-                autoComplete="new-password"
+                autoComplete="no"
                 onChange={(e) => setMatchPassword(e.target.value)}
                 value={matchPassword}
                 required
@@ -425,39 +446,39 @@ const Register = () => {
                 id="confirmnote"
                 className={
                   matchPasswordFocus && !validMatchPassword
-                    ? "instructions"
-                    : "offscreen"
+                    ? style.form__item__instructions
+                    : style.form__item__offscreen
                 }
               >
                 <FontAwesomeIcon icon={faInfoCircle} /> Должен совпадать с
                 первым полем ввода пароля.
               </p>
-              <button
-                className="btn btn-light mt-4"
-                disabled={
-                  !validFirstName ||
-                  !validLastName ||
-                  !validUserName ||
-                  !validEmail ||
-                  !validPhoneNumber ||
-                  !validPassword ||
-                  !validMatchPassword
-                    ? true
-                    : false
-                }
-              >
-                Sign Up
-              </button>
-            </form>
-            <div className=" d-flex justify-content-evenly ">
-              <p>Есть аккаунт?</p>
-              <div className="line">
-                <Link to="/login">Sign In</Link>
-              </div>
             </div>
-          </section>
-        )}
-      </>
+            <button
+              className={style.form__btn}
+              disabled={
+                !validFirstName ||
+                !validLastName ||
+                !validUserName ||
+                !validEmail ||
+                !validPhoneNumber ||
+                !validPassword ||
+                !validMatchPassword
+                  ? true
+                  : false
+              }
+            >
+              Зарегистрироваться
+            </button>
+          </form>
+          <div className={style.link}>
+            <p>Есть аккаунт?</p>
+            <div>
+              <Link to="/login">Войти</Link>
+            </div>
+          </div>
+        </section>
+      )}
     </>
   );
 };

@@ -1,4 +1,4 @@
-import "./styles.css";
+import style from "./style.module.scss";
 import { useState } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
@@ -34,7 +34,7 @@ const Edit = ({ userObj, refreshUserList, setUpdateState }) => {
       <td>
         <select
           onChange={(e) => setSelectValue(e.target.value)}
-          className="select-css"
+          className={style.select_css}
           defaultValue={userObj.roles[0]}
         >
           <option value="Doctor">Doctor</option>
@@ -45,7 +45,7 @@ const Edit = ({ userObj, refreshUserList, setUpdateState }) => {
       </td>
       <td colSpan={2}>
         <button
-          className="renew__btn"
+          className={style.renew__btn}
           onClick={(e) => handleEdit(e, userObj.user.id, userObj.roles[0])}
         >
           Обновить
